@@ -7,9 +7,12 @@ Documentation for configuring the Kafka Consumer feature can be found at https:/
 
 
 A copy of the `kafka-consumer-events.proto` file is included here, and can be found in the repository at https://github.com/OpenNMS/opennms/blob/develop/features/kafka/consumer/src/main/proto/kafka-consumer-events.proto.
+This file is not required to be part of your script to send events.
 
 The `kafka_consumer_events_pb2.py` file is the output of using the protobuf compiler against the proto definition file.
 This file can then be leveraged to create Event objects.
+
+NOTE: This file is required to be included with your script to be able to create the proper payload structure.
 
 When sending payloads to Kafka, we will serialize the event object as a string, then send it as a bytes object.
 

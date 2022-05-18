@@ -139,3 +139,17 @@ if __name__ == "__main__":
         table="important_items",
     )
     my_producer.send_event(my_event_srv)
+
+    # Trigger a Passive Status Keeper event
+
+    my_event_psk = my_producer.create_event(
+        uei="uei.opennms.org/services/passiveServiceStatus",  # Passive Status Keeper expects this specific UEI
+        severity=Severity.MAJOR,
+        node_id=19,
+        passiveNodeLabel="core_router",  # Must match the label of the node in the database
+        passiveIpAddr="192.168.42.1",  # Must match the IP address of the passive service name
+        passiveServiceName="PSK-pollerd-name",  # Must match a PassiveServiceStatus poller named assigned to the node
+        passiveStatus="Down",  # Either "Up" or "Down", case-sensitive
+        passiveReasonCode=1337,  # Optional reason code
+    )
+    my_producer.send_event(my_event_psk)

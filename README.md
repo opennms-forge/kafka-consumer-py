@@ -18,6 +18,8 @@ This file is required to be included with your script to be able to create the p
 * `event_generator.py` includes some helper classes for making a connection to Kafka and generating event objects with the default attributes and any custom parameters.
 There are also a few sample use cases for how to set associate with a node/interface/service and custom parameters.
 
+* `event_generator2.py` similar to the previous, but and example of importing the custom classes for use in other scripts.
+
 ## Associating events to nodes
 
 When received, the eventd daemon will attempt to associate the event to a node in the following order:

@@ -2,7 +2,7 @@
 # author: mmahacek@opennms.com
 
 import kafka_consumer_events_pb2
-from kafka import KafkaProducer
+import kafka
 from enum import Enum
 
 
@@ -19,7 +19,7 @@ class Severity(Enum):
 class KafkaConnection:
     def __init__(self, servers: list, topic: str) -> None:
         self.servers = servers
-        self.producer = KafkaProducer(bootstrap_servers=servers)
+        self.producer = kafka.KafkaProducer(bootstrap_servers=servers)
         self.topic = topic
 
     def create_event(
@@ -36,7 +36,7 @@ class KafkaConnection:
         dist_poller: str = None,
         log_dest: str = None,
         log_content: str = None,
-        **parameters
+        **parameters,
     ) -> kafka_consumer_events_pb2.Event:
         event = kafka_consumer_events_pb2.Event()
         # Process required fields
@@ -71,9 +71,27 @@ class KafkaConnection:
             )
         return event
 
-    def send_event(self, event: kafka_consumer_events_pb2.Event) -> None:
+    def _on_send_success(record_metadata):
+        print(
+            f"Topic: {record_metadata.topic} Partition: {record_metadata.partition} Offset: {record_metadata.offset}"
+        )
+
+    def _on_send_error(e):
+        print("I am an errback", exc_info=e)
+
+    def send_event(
+        self, event: kafka_consumer_events_pb2.Event, timeout=10
+    ) -> kafka.producer.future.RecordMetadata:
         payload = bytes(event.SerializeToString())
         self.producer.send(self.topic, payload)
+
+        future = (
+            self.producer.send(self.topic, payload)
+            .add_callback(self._on_send_success)
+            .add_errback(self._on_send_error)
+        )
+        record_metadata = future.get(timeout=timeout)
+        return record_metadata
 
 
 if __name__ == "__main__":
@@ -91,7 +109,10 @@ if __name__ == "__main__":
         _foreignSource="requisitionName",
         _foreignId="12345",
     )
-    my_producer.send_event(my_event_fid)
+    message = my_producer.send_event(my_event_fid)
+    print(
+        message
+    )  # The send_event method returns a RecordMetadata object with information about where the message was sent
 
     # Send a bare bones event based on the node's database ID
 
@@ -100,7 +121,9 @@ if __name__ == "__main__":
         severity=Severity["MINOR"],  # If assigning a severity based on a string value
         node_id=101,
     )
-    my_producer.send_event(my_event_db)
+    my_producer.send_event(
+        my_event_db, timeout=30
+    )  # By default, the send_event method will wait 10 seconds for a response from the Kafka broker. You can change this timeout by passing a different value to the timeout parameter.
 
     # Send send an event related to a specific IP interface
 

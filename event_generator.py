@@ -77,7 +77,7 @@ class KafkaConnection:
         )
 
     def _on_send_error(e):
-        print("I am an errback", exc_info=e)
+        print("Kafka send error: ", exc_info=e)
 
     def send_event(
         self, event: kafka_consumer_events_pb2.Event, timeout=10

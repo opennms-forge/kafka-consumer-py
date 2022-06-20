@@ -83,7 +83,7 @@ class KafkaConnection:
         self, event: kafka_consumer_events_pb2.Event, timeout=10
     ) -> kafka.producer.future.RecordMetadata:
         payload = bytes(event.SerializeToString())
-        self.producer.send(self.topic, payload)
+        # self.producer.send(self.topic, payload)
 
         future = (
             self.producer.send(self.topic, payload)
@@ -123,7 +123,8 @@ if __name__ == "__main__":
     )
     my_producer.send_event(
         my_event_db, timeout=30
-    )  # By default, the send_event method will wait 10 seconds for a response from the Kafka broker. You can change this timeout by passing a different value to the timeout parameter.
+    )  # By default, the send_event method will wait 10 seconds for a response from the Kafka broker.
+    # You can change this timeout by passing a different value to the timeout parameter.
 
     # Send send an event related to a specific IP interface
 

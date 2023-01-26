@@ -9,6 +9,12 @@ Documentation for this project is available at https://opennms-forge.github.io/k
 
 Documentation for configuring the Kafka Consumer feature can be found at https://docs.opennms.com/horizon/latest/operation/deep-dive/events/sources/kafka.html.
 
+## Installation
+
+```
+pip install onms-kafka-events
+```
+
 ## Associating events to nodes
 
 When received, the eventd daemon will attempt to associate the event to a node in the following order:

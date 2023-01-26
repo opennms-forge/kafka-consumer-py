@@ -45,22 +45,8 @@ class KafkaConnection:
     ) -> models.Event:
         """Create a `models.Event` object to be used in `send_event()`
 
-        Args:
-            uei (str): _description_
-            source (str, optional): _description_. Defaults to "kafka-consumer".
-            severity (Severity, optional): _description_. Defaults to Severity.INDETERMINATE.
-            host (str, optional): _description_. Defaults to None.
-            node_id (int, optional): _description_. Defaults to None.
-            ip_address (str, optional): _description_. Defaults to None.
-            service_name (str, optional): _description_. Defaults to None.
-            if_index (int, optional): _description_. Defaults to None.
-            description (str, optional): _description_. Defaults to None.
-            dist_poller (str, optional): _description_. Defaults to None.
-            log_dest (str, optional): _description_. Defaults to None.
-            log_content (str, optional): _description_. Defaults to None.
+        To include paramenters on the event, add them as additional keyword arguments to this method.
 
-        Returns:
-            models.Event: _description_
         """
         event = models.Event()
         # Process required fields

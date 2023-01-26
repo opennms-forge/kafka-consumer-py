@@ -3,7 +3,7 @@
 
 # onms_kafka_events
 
-This example shows one way to generate protobuf payloads with Python, and send them to a Kafka topic for OpenNMS Horizon/Meridian to consume.
+This library will allow you to generate event objects in Python to send to a Kafka topic for OpenNMS Horizon/Meridian to process.
 
 Documentation for this project is available at https://opennms-forge.github.io/kafka-consumer-py/
 
@@ -29,6 +29,8 @@ my_producer = KafkaConnection(
 my_event = my_producer.create_event(
     uei="uei.opennms.org/custom/event",
     severity=Severity.WARNING,
+    node_id=1234,
+    custom="value"
 )
 
 result = my_producer.send_event(my_event)

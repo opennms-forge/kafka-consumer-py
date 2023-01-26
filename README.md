@@ -7,7 +7,7 @@ This library will allow you to generate event objects in Python to send to a Kaf
 
 Documentation for this project is available at https://opennms-forge.github.io/kafka-consumer-py/
 
-Documentation for configuring the Kafka Consumer feature can be found at https://docs.opennms.com/horizon/latest/operation/deep-dive/events/sources/kafka.html.
+Documentation for configuring the Kafka Consumer feature on your Horizon/Meridian server can be found at https://docs.opennms.com/horizon/latest/operation/deep-dive/events/sources/kafka.html.
 
 ## Installation
 

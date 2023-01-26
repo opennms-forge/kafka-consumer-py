@@ -9,6 +9,7 @@ import onms_kafka_events.kafka_consumer_events_pb2 as models
 import kafka
 from kafka.producer.future import FutureRecordMetadata
 from enum import Enum
+from typing import List
 
 
 class Severity(Enum):
@@ -22,7 +23,7 @@ class Severity(Enum):
 
 
 class KafkaConnection:
-    def __init__(self, servers: list, topic: str) -> None:
+    def __init__(self, servers: List[str], topic: str) -> None:
         self.servers = servers
         self.producer = kafka.KafkaProducer(bootstrap_servers=servers)
         self.topic = topic
@@ -45,7 +46,7 @@ class KafkaConnection:
     ) -> models.Event:
         """Create a `models.Event` object to be used in `send_event()`
 
-        To include paramenters on the event, add them as additional keyword arguments to this method.
+        To include parameters on the event, add them as additional keyword arguments to this method.
 
         """
         event = models.Event()

@@ -1,6 +1,11 @@
+![package version](https://img.shields.io/pypi/v/onms_kafka_events)
+![python version](https://img.shields.io/pypi/pyversions/onms_kafka_events)
+
 # onms_kafka_events
 
 This example shows one way to generate protobuf payloads with Python, and send them to a Kafka topic for OpenNMS Horizon/Meridian to consume.
+
+Documentation for this project is available at https://opennms-forge.github.io/kafka-consumer-py/
 
 Documentation for configuring the Kafka Consumer feature can be found at https://docs.opennms.com/horizon/latest/operation/deep-dive/events/sources/kafka.html.
 

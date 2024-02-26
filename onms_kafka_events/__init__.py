@@ -5,11 +5,13 @@
 .. include:: ../README.md
 """
 
-import onms_kafka_events.kafka_consumer_events_pb2 as models
-import kafka
-from kafka.producer.future import FutureRecordMetadata
 from enum import Enum
 from typing import List
+
+import kafka
+from kafka.producer.future import FutureRecordMetadata
+
+import onms_kafka_events.kafka_consumer_events_pb2 as models
 
 
 class Severity(Enum):
@@ -80,12 +82,12 @@ class KafkaConnection:
             event.parameter.append(models.EventParameter(name=name, value=str(value)))
         return event
 
-    def _on_send_success(record_metadata):
+    def _on_send_success(self, record_metadata):
         print(
             f"Topic: {record_metadata.topic} Partition: {record_metadata.partition} Offset: {record_metadata.offset}"
         )
 
-    def _on_send_error(e):
+    def _on_send_error(self, e):
         print("Kafka send error: ", exc_info=e)
 
     def send_event(self, event: models.Event, timeout=10) -> FutureRecordMetadata:

@@ -1,7 +1,7 @@
 # event_generator.py
 # author: mmahacek@opennms.com
 
-import kafka_consumer_events_pb2
+import onms_kafka_events.kafka_consumer_events_pb2 as kafka_consumer_events_pb2
 import kafka
 from enum import Enum
 
